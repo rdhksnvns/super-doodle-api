@@ -78,6 +78,9 @@ router.post("/accounts", async (req, res) => {
     };
     const result = await ref.insertOne(doc);
     console.log(`A document was inserted with the _id: ${result.insertedId}`);
+  } catch(err) {
+    console.log(err);
+    return res.status(500).json({ error: "Internal server error" });
   } finally {
     await client.close();
   }
@@ -104,6 +107,9 @@ router.get("/accounts", async (req, res) => {
     }
 
     return res.json(data);
+  } catch(err) {
+    console.log(err);
+    return res.status(500).json({ error: "Internal server error" });
   } finally {
     await client.close();
   }
@@ -125,6 +131,9 @@ router.get("/accounts/:id", async (req, res) => {
     }
 
     return res.json(data);
+  } catch(err) {
+    console.log(err);
+    return res.status(500).json({ error: "Internal server error" });
   } finally {
     await client.close();
   }
@@ -196,6 +205,9 @@ router.post("/accounts/:id", async (req, res) => {
 
       return res.json(doc);
     };
+  } catch(err) {
+    console.log(err);
+    return res.status(500).json({ error: "Internal server error" });
   } finally {
     await client.close();
   }
