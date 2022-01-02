@@ -64,7 +64,7 @@ router.post("/accounts", async (req, res) => {
       ":" +
       currentdate.getSeconds();
 
-    let newId =  await ref.countDocuments() + 1;
+    let newId = (await ref.countDocuments()) + 1;
 
     // create a document to insert
     const doc = {
@@ -78,7 +78,7 @@ router.post("/accounts", async (req, res) => {
     };
     const result = await ref.insertOne(doc);
     console.log(`A document was inserted with the _id: ${result.insertedId}`);
-  } catch(err) {
+  } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Internal server error" });
   } finally {
@@ -90,7 +90,6 @@ router.post("/accounts", async (req, res) => {
 
 // Get all accounts
 router.get("/accounts", async (req, res) => {
-
   try {
     await client.connect();
 
@@ -101,13 +100,13 @@ router.get("/accounts", async (req, res) => {
       console.log("No documents found!");
       return res.status(404).json({ error: "User does not exist" });
     } else {
-      await fullData.forEach((doc) => { 
+      await fullData.forEach((doc) => {
         data.push(doc);
       });
     }
 
     return res.json(data);
-  } catch(err) {
+  } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Internal server error" });
   } finally {
@@ -131,7 +130,7 @@ router.get("/accounts/:id", async (req, res) => {
     }
 
     return res.json(data);
-  } catch(err) {
+  } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Internal server error" });
   } finally {
@@ -165,7 +164,7 @@ router.post("/accounts/:id", async (req, res) => {
         if (isNaN(balance)) {
           return res.status(400).json({ error: "Balance must be a number" });
         }
-      };
+      }
 
       const timeStamp = Date.now();
       var currentdate = new Date();
@@ -204,8 +203,8 @@ router.post("/accounts/:id", async (req, res) => {
       console.log(`A document was updated`);
 
       return res.json(doc);
-    };
-  } catch(err) {
+    }
+  } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Internal server error" });
   } finally {
